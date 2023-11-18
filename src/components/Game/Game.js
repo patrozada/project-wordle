@@ -9,8 +9,8 @@ const answer = sample(WORDS);
 // To make debugging easier, we'll log the solution in the console.
 console.info({ answer });
 
-function Game() {
-  return <><GuessForm/></>;
+function Game({addGuessToList}) {
+  return <GuessForm addGuessToList={addGuessToList}/>;
 }
 
 export default Game;
