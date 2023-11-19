@@ -1,14 +1,17 @@
 import React from 'react';
+import {checkGuess} from '../../../game-helpers';
 
-function GuessForm({addGuessToList}) {
+function GuessForm({addGuessToList, answer, addToGuessValidation}) {
   const [guess, setGuess] = React.useState('');
   const handleInputChange = value => {
     const uppercasedValue = !!value.length && value.toUpperCase();
     setGuess(uppercasedValue);
   }
+
   const handleFormSubmit = (e) => {
     e.preventDefault();
     addGuessToList(guess);
+    addToGuessValidation(checkGuess(guess, answer))
     setGuess('');
   }
   return <form className="guess-input-wrapper" onSubmit={(e) => handleFormSubmit(e)}>

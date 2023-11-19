@@ -1,10 +1,11 @@
 import React from 'react';
 import {range} from '../../utils';
 
-function Guess({guess}) {
+function Guess({guess, guessValidation}) {
   const letters = range(0,5)
+  console.log({guessValidation})
   return <p className='guess'>
-    {letters.map((letter, index) => <span key={index} className="cell">{guess && guess[index]}</span>)}
+    {letters.map((letter) => <span key={letter} className={`cell ${guessValidation &&guessValidation[letter]}`}>{guess[letter] && guess[letter]}</span>)}
   </p>;
 }
 
