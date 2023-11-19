@@ -1,6 +1,6 @@
 import React from 'react';
-
-function GuessForm({addGuessToList}) {
+import PropTypes from 'prop-types';
+function GuessForm({ addGuessToList }) {
   const [guess, setGuess] = React.useState('');
   const handleInputChange = value => {
     const uppercasedValue = value.length ? value.toUpperCase() : '';
@@ -16,6 +16,9 @@ function GuessForm({addGuessToList}) {
     <label htmlFor='guess-input'>Enter guess</label>
     <input id='guess-input' type="text" value={guess} onChange={e => handleInputChange(e.target.value)} maxLength={5} minLength={5} required={true}  pattern="[a-zA-Z]{5}"/>
   </form>;
+}
+GuessForm.propTypes = {
+  addGuessToList: PropTypes.func.isRequired,
 }
 
 export default GuessForm;

@@ -24,7 +24,7 @@ function App() {
 
   const [boardStatus, setBoardStatus] = React.useState(createInitialState(NUM_OF_GUESSES_ALLOWED));
   const [guessList, setGuessList] = React.useState([]);
-  
+
   const addGuessToList = newGuess => {
     const nextGuessList = [...guessList];
     nextGuessList.push(newGuess);
