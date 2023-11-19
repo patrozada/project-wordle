@@ -9,8 +9,6 @@ import {NUM_OF_GUESSES_ALLOWED} from '../../constants';
 import { checkGuess } from '../../game-helpers';
 import { WORDS } from '../../data';
 
-// Pick a random word on every pageload.
-const answer = sample(WORDS);
 
 function App() {
   const createInitialState = numberOfAttempts => {
@@ -23,7 +21,8 @@ function App() {
 
   const [boardStatus, setBoardStatus] = React.useState(createInitialState(NUM_OF_GUESSES_ALLOWED));
   const [guessList, setGuessList] = React.useState([]);
-  const [ isGameOver, setIsGameOver ] = React.useState({gameEnded: false,
+  const [answer, setAnswer] = React.useState(sample(WORDS));
+  const [isGameOver, setIsGameOver] = React.useState({gameEnded: false,
   userWon: false});
 
   const addGuessToList = newGuess => {
@@ -40,7 +39,7 @@ function App() {
       },
     };
     setBoardStatus(nextBoardStatus);
-    const isUserOutOfAttempts = nextGuessList.length === 6;
+    const isUserOutOfAttempts = nextGuessList.length === NUM_OF_GUESSES_ALLOWED;
     const isGuessCorrect = newGuess === answer;
     if (isGuessCorrect) {
       const newIsGameOver = {
@@ -59,6 +58,13 @@ function App() {
   };
 
 
+  const resetGame = () => {
+    setGuessList([]);
+    setBoardStatus(createInitialState(NUM_OF_GUESSES_ALLOWED));
+    setAnswer(sample(WORDS));
+    setIsGameOver({gameEnded: false,
+      userWon: false})
+  }
 
   return (
     <div className="wrapper">
@@ -66,7 +72,13 @@ function App() {
       <div className="game-wrapper">
         <GuessList boardStatus={boardStatus}/>
         <Game addGuessToList={addGuessToList} isGameOver={isGameOver.gameEnded} />
-        {isGameOver.gameEnded ? <Banner userWon={isGameOver.userWon} answer={answer} attempts={guessList.length}/> : null}
+        {isGameOver.gameEnded ? 
+          <Banner 
+            userWon={isGameOver.userWon} 
+            answer={answer} 
+            attempts={guessList.length} 
+            resetGame={resetGame}
+          /> : null}
       </div>
     </div>
   );
