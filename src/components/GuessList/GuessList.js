@@ -1,12 +1,12 @@
 import React from 'react';
 import Guess from '../Guess';
-import {range} from '../../utils';
-import {NUM_OF_GUESSES_ALLOWED} from '../../constants';
 
-function GuessList({guessList, guessValidation}) {
-  const guessAttempts = range(0, NUM_OF_GUESSES_ALLOWED)
+function GuessList({boardStatus}) {
+  const guessAttempts = Object.values(boardStatus).map(guess => guess.guess);
+  const guessValidation = Object.values(boardStatus).map(guess => guess.status);
+  console.log({guessValidation})
   return <div className='guess-results'>
-  {guessAttempts.map((attempt) => <Guess key={Math.random()} guess={guessList[attempt] ? guessList[attempt] : ''} guessValidation={guessValidation[attempt]&&guessValidation[attempt]}/>)}
+  {guessAttempts.map((attempt, i) => <Guess key={Math.random()} guess={attempt} guessValidation={guessValidation[i]}/>)}
   </div>;
 }
 
